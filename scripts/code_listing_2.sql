@@ -1,10 +1,18 @@
 CREATE OR REPLACE FUNCTION f (
     x IN VARCHAR2
-) RETURN NUMBER authid definer AS
+) RETURN NUMBER
+    AUTHID definer
+AS
 BEGIN
     dbms_application_info.set_client_info(userenv('client_info') + 1);
     RETURN length(x);
 END;
+/
+
+VARIABLE cpu NUMBER;
+
+EXEC
+    :cpu := 15;
 /
 
 BEGIN
@@ -13,13 +21,25 @@ BEGIN
 END;
 /
 
-SELECT
-    owner,
-    f(owner)
-FROM
-    ALL_OBJECTS;
---72841 rows selected.
-    
+SET SERVEROUTPUT ON
+
+DECLARE
+    TYPE stage IS RECORD ( own         VARCHAR2(100),
+    len         NUMBER );
+    TYPE stage_t IS
+        TABLE OF stage;
+    l_stage_t   stage_t := stage_t ();
+BEGIN
+    SELECT
+        owner,
+        f(owner)
+    BULK COLLECT
+    INTO l_stage_t
+    FROM
+        all_objects;
+
+    dbms_output.put_line(l_stage_t.count);
+END;
 /
 
 SELECT

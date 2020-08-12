@@ -4,11 +4,23 @@ BEGIN
 END;
 /
 
-SELECT
-    owner,
-    f(owner)
-FROM
-    all_objects;
+DECLARE
+    TYPE stage IS RECORD ( own         VARCHAR2(100),
+    len         NUMBER );
+    TYPE stage_t IS
+        TABLE OF stage;
+    l_stage_t   stage_t := stage_t ();
+BEGIN
+    SELECT
+        owner,
+        f(owner)
+    BULK COLLECT
+    INTO l_stage_t
+    FROM
+        all_objects;
+
+    dbms_output.put_line(l_stage_t.count);
+END;
 /
 
 SELECT
