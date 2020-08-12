@@ -8,7 +8,7 @@ SELECT
     owner,
     f(owner)
 FROM
-    stage;
+    all_objects;
 /
 
 SELECT
@@ -16,3 +16,4 @@ SELECT
     userenv('client_info')
 FROM
     dual;
+--315	0

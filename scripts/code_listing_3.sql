@@ -1,3 +1,8 @@
+BEGIN
+    :cpu := dbms_utility.get_cpu_time;
+    dbms_application_info.set_client_info(0);
+END;
+/
 SELECT
     owner,
     (
@@ -7,7 +12,7 @@ SELECT
             dual
     ) f
 FROM
-    stage;
+    all_objects;
 /
 
 SELECT
@@ -15,4 +20,4 @@ SELECT
     userenv('client_info')
 FROM
     dual;
---> the function went from 72,841 calls down to 66
+--836	52

@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION f (
     x IN VARCHAR2
-) RETURN NUMBER
+) RETURN NUMBER authid definer
     DETERMINISTIC
 AS
 BEGIN
@@ -19,7 +19,7 @@ SELECT
     owner,
     f(owner)
 FROM
-    stage;
+    all_objects;
 /
 
 SELECT
@@ -27,4 +27,4 @@ SELECT
     userenv('client_info')
 FROM
     dual;
---> not as good!
+--267	2
