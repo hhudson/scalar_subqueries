@@ -10,9 +10,8 @@ END;
 /
 
 VARIABLE cpu NUMBER;
-
-EXEC
-    :cpu := 15;
+/
+EXEC :cpu := 15;
 /
 
 BEGIN
