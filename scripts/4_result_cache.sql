@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION f (
     x IN VARCHAR2
 ) RETURN NUMBER
     AUTHID definer
-    RESULT_CACHE
+    RESULT_CACHE --added result cache to improve performance of f function
 AS
 BEGIN
     dbms_application_info.set_client_info(userenv('client_info') + 1);

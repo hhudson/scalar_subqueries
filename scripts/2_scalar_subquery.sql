@@ -15,7 +15,7 @@ DECLARE
 BEGIN
     SELECT
         owner,
-        (
+        (--used scalar subquery to dramatically increase performance
             SELECT
                 f(owner)
             FROM
